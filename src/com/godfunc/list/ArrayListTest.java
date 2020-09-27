@@ -37,6 +37,14 @@ public class ArrayListTest {
     }
 
     @Test
+    public void giveInitCap() {
+        ArrayList<Integer> list = new ArrayList<>(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+    }
+
+    @Test
     public void cloneTest() {
         Student tom = new Student("tom", 11);
         ArrayList<Student> list = new ArrayList<>();
