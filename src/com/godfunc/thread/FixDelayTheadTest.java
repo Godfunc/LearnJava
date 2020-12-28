@@ -16,8 +16,7 @@ public class FixDelayTheadTest {
             @Override
             public Thread newThread(Runnable r) {
                 long num = theadNum.incrementAndGet();
-                SecurityManager securityManager = System.getSecurityManager();
-                ThreadGroup  threadGroup = Thread.currentThread().getThreadGroup();
+                ThreadGroup threadGroup = new ThreadGroup(Thread.currentThread().getThreadGroup(), "延时通知线程组");
                 Thread thread = new Thread(threadGroup, r, "测试线程-" + num, 0);
                 thread.setDaemon(false);
                 return thread;
@@ -26,13 +25,9 @@ public class FixDelayTheadTest {
 
 
         scheduledThreadPoolExecutor.schedule(() -> {
-            System.out.println(1);
-            if (System.currentTimeMillis() % 2 == 0) {
-                scheduledThreadPoolExecutor.schedule(() -> {
-                    System.out.println(1);
-                }, 10, TimeUnit.SECONDS);
-            }
-        }, 10, TimeUnit.SECONDS);
+            System.out.println(Thread.currentThread().getThreadGroup().getName() + "-"+ Thread.currentThread().getName());
+
+        }, 5, TimeUnit.SECONDS);
 
     }
 }
